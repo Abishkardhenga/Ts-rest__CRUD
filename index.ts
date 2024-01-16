@@ -8,6 +8,8 @@ import Contractroutes from "./Controller/Contractroutes";
 import { dbConnect } from "./db/db";
 import { AuthContract } from "./Contracts/AuthContract";
 import AuthController from "./Controller/AuthRoutes";
+import { UserContract } from "./Contracts/UserContracts";
+import  UserController  from "./Controller/UserController";
 
 //For env File
 dotenv.config();
@@ -22,6 +24,7 @@ dbConnect();
 
 createExpressEndpoints(contract, Contractroutes, app);
 createExpressEndpoints(AuthContract, AuthController, app);
+createExpressEndpoints(UserContract, UserController, app);
 
 app.listen(port, () => {
   console.log(`Server is started  at http://localhost:${port}`);
