@@ -1,6 +1,7 @@
 import { initServer } from "@ts-rest/express";
 import { UserContract } from "../Contracts/UserContracts";
 import user from "../Model/AuthModel";
+import { z } from "zod";
 
 const server = initServer();
 
@@ -36,6 +37,36 @@ const UserController = server.router(UserContract, {
         body: {
           success: false,
           message: "Error Occurred",
+        },
+      };
+    }
+  },
+  DeleteUser: async (pathParams: { id: number }) => {
+    try {
+      const data = await user.findByIdAndDelete(pathParams.id);
+      if (!data) {
+        return {
+          status: 403,
+          body: {
+            message: "no is is found",
+            success: false,
+          },
+        };
+      } 
+        return {
+          status: 200,
+          body: {
+            message: "successfuly deleted hai ta",
+            success: true,
+          },
+        };
+      
+    } catch (err) {
+      return {
+        status: 500,
+        body: {
+          message: "unexpected error ",
+          success: false,
         },
       };
     }
