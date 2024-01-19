@@ -41,9 +41,9 @@ const UserController = server.router(UserContract, {
       };
     }
   },
-  DeleteUser: async (pathParams: { id: number }) => {
+  DeleteUser: async ({ params }) => {
     try {
-      const data = await user.findByIdAndDelete(pathParams.id);
+      const data = await user.findByIdAndDelete(params.id);
       if (!data) {
         return {
           status: 403,
@@ -52,15 +52,14 @@ const UserController = server.router(UserContract, {
             success: false,
           },
         };
-      } 
-        return {
-          status: 200,
-          body: {
-            message: "successfuly deleted hai ta",
-            success: true,
-          },
-        };
-      
+      }
+      return {
+        status: 200,
+        body: {
+          message: "successfuly deleted hai ta",
+          success: true,
+        },
+      };
     } catch (err) {
       return {
         status: 500,

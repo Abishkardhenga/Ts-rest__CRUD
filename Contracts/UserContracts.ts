@@ -28,7 +28,7 @@ export const UserContract = server.router({
   },
   DeleteUser: {
     method: "DELETE",
-    path: `/delete`,
+    path: `/delete/:id`,
     responses: {
       200: DeleteSchema,
       //   404: ErrorSchema,
@@ -36,8 +36,8 @@ export const UserContract = server.router({
       500: ErrorSchema,
     },
 
-    pathParams: z.object({
-      id: z.coerce.number(),
-    }),
+    body:z.object({
+
+    })
   },
 });
