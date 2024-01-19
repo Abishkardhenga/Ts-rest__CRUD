@@ -1,7 +1,7 @@
 import { initServer } from "@ts-rest/express";
 import { UserContract } from "../Contracts/UserContracts";
 import user from "../Model/AuthModel";
-import { z } from "zod";
+import { string, z } from "zod";
 
 const server = initServer();
 
@@ -65,6 +65,44 @@ const UserController = server.router(UserContract, {
         status: 500,
         body: {
           message: "unexpected error ",
+          success: false,
+        },
+      };
+    }
+  },
+  UpdatePassword: async ({ params, body }) => {
+    try {
+      let updatedData = await user.findByIdAndUpdate(
+        params.id,
+        {
+          password: body.password,
+        },
+        { new: true }
+      );
+      if (!updatedData) {
+        return {
+          status: 403,
+          body: {
+            message: "data is not available ",
+            success: false,
+          },
+        };
+      }
+
+      const { id, email, password } = updatedData;
+      return {
+        status: 200,
+        body: {
+          email,
+          id,
+          password,
+        },
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        body: {
+          message: "error occured",
           success: false,
         },
       };

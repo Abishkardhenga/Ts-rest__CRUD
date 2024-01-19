@@ -16,6 +16,12 @@ export const DeleteSchema = z.object({
   success: z.boolean(),
 });
 
+export const UpdatePasswordSchema = z.object({
+  id: z.number(),
+  email: z.string(),
+  password: z.string(),
+});
+
 export const UserContract = server.router({
   GetAllUser: {
     method: "GET",
@@ -36,8 +42,19 @@ export const UserContract = server.router({
       500: ErrorSchema,
     },
 
-    body:z.object({
+    body: z.object({}),
+  },
+  UpdatePassword: {
+    method: "PATCH",
+    path: `/editpassword/:id`,
+    responses: {
+      200: UpdatePasswordSchema,
+      403: ErrorSchema,
+      500: ErrorSchema,
+    },
 
-    })
+    body: z.object({
+      password: z.string(),
+    }),
   },
 });
